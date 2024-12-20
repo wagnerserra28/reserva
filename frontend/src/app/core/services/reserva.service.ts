@@ -12,6 +12,10 @@ export class ReservaService {
     return this.http.get('http://localhost:4000/api/reservas')
   }
 
+  obterPesquisa(term: string) {
+    return this.http.get('http://localhost:4000/api/reservas/pesquisa?term=' + term);
+  }
+
   ativarInativar(id: string) {
     return this.http.patch(`http://localhost:4000/api/reservas/${id}/inativar`, {});
   }
