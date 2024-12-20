@@ -8,6 +8,7 @@ module.exports =
   create,
   edit,
   get,
+  getSearch,
   getById,
   inactive
 }
@@ -75,6 +76,20 @@ function get() {
     reserva.cliente = db.clientes.find((c) => c.id == reserva.clienteId);
     reserva.sala = db.salas.find((s) => s.id == reserva.salaId);
   });
+
+  return reservas;
+}
+
+function getSearch(term) {
+  var json = fs.readFileSync(pathDb, 'utf8');
+  var db = JSON.parse(json);
+  var reservas = db.reservas.filter((r) => r.ativo == true);
+  reservas.map(reserva => {
+    reserva.cliente = db.clientes.find((c) => c.id == reserva.clienteId);
+    reserva.sala = db.salas.find((s) => s.id == reserva.salaId);
+  });
+
+  reservas = reservas.filter((r) => r.cliente.nome.toLowerCase().includes(term.toLowerCase()) || r.sala.descricao.toLowerCase().includes(term.toLowerCase()));
 
   return reservas;
 }
