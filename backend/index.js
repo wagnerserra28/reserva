@@ -161,6 +161,16 @@ server.get('/api/reservas', (req, res, next) => {
     }
 });
 
+server.get('/api/reservas/pesquisa', (req, res, next) => {
+    try {
+        const term = req.query.term;
+        const reservas = reservaService.getSearch(term);
+        res.json(reservas);
+    } catch (error) {
+        next(error); // calling next error handling middleware
+    }
+});
+
 server.get('/api/reservas/:id', (req, res, next) => {
     try {
         const id = req.params.id;
