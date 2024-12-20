@@ -8,6 +8,7 @@ module.exports =
   create,
   edit,
   get,
+  getSearch,
   getById,
   inactive
 }
