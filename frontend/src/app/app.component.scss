@@ -1,0 +1,11 @@
+body {
+  min-height: 100vh;
+}
+
+.content {
+  min-height: calc(100vh - 64px); /* 64px is the height of your footer */
+}
+
+footer p:last-child {
+  margin-bottom: 0;
+}

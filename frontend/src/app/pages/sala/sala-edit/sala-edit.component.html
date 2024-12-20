@@ -1,0 +1,27 @@
+<div class="container mt-3">
+  <div class="row card">
+    <div class="mb-3">
+      <label for="descricao" class="form-label">Descrição</label>
+      <input type="email" class="form-control" id="descricao" [(ngModel)]="descricao" placeholder="Descrição">
+    </div>
+    <div class="mb-3">
+      <label for="quantidadeCadeiras" class="form-label">Quantidade de cadeiras</label>
+      <input type="number" class="form-control" id="quantidadeCadeiras" [(ngModel)]="quantidadeCadeiras" placeholder="Quantidade de cadeiras">
+    </div>
+    <div class="mb-3">
+      <button type="button" class="btn btn-success m-1" (click)="salvarSala()">Salvar</button>
+      <button type="button" class="btn btn-secondary m-1" routerLink="/salas">Voltar</button>
+    </div>
+    @if (salvoComSucesso) {
+        <div class="alert alert-success" role="alert">
+          Salvo com sucesso
+        </div>
+    }
+    @if (camposObrigatorios) {
+      <div class="alert alert-warning" role="alert">
+        Existem campos obrigatórios
+      </div>
+    }
+
+  </div>
+</div>
