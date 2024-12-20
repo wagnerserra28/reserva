@@ -67,7 +67,7 @@ function edit(id, params) {
 function get() {
   var json = fs.readFileSync(pathDb, 'utf8');
   var db = JSON.parse(json);
-  var reservas = db.reservas;
+  var reservas = db.reservas.filter((r) => r.ativo == true);
   reservas.map(reserva => {
     reserva.cliente = db.clientes.find((c) => c.id == reserva.clienteId);
     reserva.sala = db.salas.find((s) => s.id == reserva.salaId);
