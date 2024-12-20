@@ -30,6 +30,7 @@ export class ReservaEditComponent implements OnInit {
   camposObrigatorios: boolean = false;
   salvoComSucesso: boolean = false;
   idEditar!: string;
+  mensagemErro!: string;
 
   salas: SalaModel[] = [];
   clientes: ClienteModel[] = [];
@@ -116,6 +117,9 @@ export class ReservaEditComponent implements OnInit {
 
               this.limparForm();
             }
+          }, error: (err: any) => {
+            if(err.status === 400)
+              this.mensagemErro = err.error;
           }
         });
       }
@@ -132,6 +136,9 @@ export class ReservaEditComponent implements OnInit {
 
               this.limparForm();
             }
+          }, error: (err: any) => {
+            if(err.status === 400)
+              this.mensagemErro = err.error;
           }
         });
       }

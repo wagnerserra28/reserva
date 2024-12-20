@@ -13,10 +13,11 @@ module.exports =
 }
 
 function create(params) {
-  validate(params);
-
   var json = fs.readFileSync(pathDb, 'utf8');
   var db = JSON.parse(json);
+
+  validarReservaExistente(params, db.reservas);
+
   const id = uuidv4();
   
   const reservaNova = { 
@@ -41,6 +42,8 @@ function create(params) {
 function edit(id, params) {
   var json = fs.readFileSync(pathDb, 'utf8');
   var db = JSON.parse(json);
+
+  validarReservaExistente(params, db.reservas);
 
   const index = db.reservas.findIndex((s) => s.id == id);
 
@@ -103,9 +106,26 @@ function inactive(id) {
   fs.writeFileSync(pathDb, json);
 }
 
+function validarReservaExistente(params, reservas) {
+  const reservasSala = reservas.filter(reserva => reserva.ativo == true && reserva.salaId === params.salaId);
 
-function validate(params) {
-  // if (!params.nome || typeof params.nome !== 'string') {
-  //   throw new Error('Nome inválido');
-  // }
+  const timeInicio = new Date(params.dataInicio);
+  timeInicio.setHours(params.timeInicio.hour, params.timeInicio.minute, 0, 0);
+
+  const timeFim = new Date(params.dataFim);
+  timeFim.setHours(params.timeFim.hour, params.timeFim.minute, 0, 0);
+
+  const existeConflito = reservasSala.some(reserva => {
+    const reservaInicio = new Date(reserva.dataInicio);
+    reservaInicio.setHours(reserva.timeInicio.hour, reserva.timeInicio.minute, 0, 0);
+
+    const reservaFim = new Date(reserva.dataFim);
+    reservaFim.setHours(reserva.timeFim.hour, reserva.timeFim.minute, 0, 0);
+
+    return (timeInicio < reservaFim && timeFim > reservaInicio);
+  });
+
+  if (existeConflito) {
+    throw new Error("Já existe uma reserva para essa sala no mesmo horário.");
+  }
 }
