@@ -1,0 +1,50 @@
+<div class="container mt-3">
+    <div class="row card">
+      <div class="mb-3">
+        <label for="clienteId">Clientes</label>
+        <select [(ngModel)]="clienteId" class="form-control" id="clienteId">
+          @for(cliente of clientes; track cliente) {
+            <option [value]="cliente.id">{{cliente.nome}}</option>
+          }
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="salaId">Salas</label>
+        <select [(ngModel)]="salaId" class="form-control" id="salaId">
+          @for(sala of salas; track sala) {
+            <option [value]="sala.id">{{sala.descricao}}</option>
+          }
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="dataInicio" class="form-label">Data Início</label>
+        <input type="date" class="form-control" id="dataInicio" [(ngModel)]="dataInicio" placeholder="Data Início">
+        <ngb-timepicker [(ngModel)]="timeInicio" />
+      </div>
+      <div class="mb-3">
+        <label for="dataFim" class="form-label">Data Fim</label>
+        <input type="date" class="form-control" id="dataFim" [(ngModel)]="dataFim" placeholder="Data Fim">
+        <ngb-timepicker [(ngModel)]="timeFim" />
+      </div>
+      <div class="mb-3">
+        <button type="button" class="btn btn-success m-1" (click)="salvarReserva()">Salvar</button>
+        <button type="button" class="btn btn-secondary m-1" routerLink="/reservas">Voltar</button>
+      </div>
+      @if (salvoComSucesso) {
+          <div class="alert alert-success" role="alert">
+            Salvo com sucesso
+          </div>
+      }
+      @if (camposObrigatorios) {
+        <div class="alert alert-warning" role="alert">
+          Existem campos obrigatórios
+        </div>
+      }
+      @if (mensagemErro && mensagemErro.length > 0) {
+        <div class="alert alert-warning" role="alert">
+          {{mensagemErro}}
+        </div>
+      }
+    </div>
+  </div>
+  

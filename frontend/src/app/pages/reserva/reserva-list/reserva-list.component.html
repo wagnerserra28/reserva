@@ -1,0 +1,48 @@
+<div class="card mt-3">
+    <div class="card-body">
+        Lista de reservas
+        <button type="button" class="btn btn-primary" routerLink="/reserva-criar">Criar</button>
+    </div>
+</div>
+
+@if(reservas && reservas.length > 0) {
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Cliente</th>
+                <th scope="col">Sala</th>
+                <th scope="col">Data Inicio</th>
+                <th scope="col">Data Fim</th>
+                <th scope="col">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (reserva of reservas; track reserva; let i = $index) {
+            <tr>
+                <th scope="row">{{ i + 1 }}</th>
+                <td>
+                    {{ reserva.cliente?.nome }}
+                </td>
+                <td>{{ reserva.sala?.descricao }}</td>
+                <td>{{ reserva.dataInicio | date : 'dd/MM/yyyy' }} {{ reserva.timeInicio?.hour }}:{{ reserva.timeInicio?.minute }}</td>
+                <td>{{ reserva.dataFim | date : 'dd/MM/yyyy' }} {{ reserva.timeFim?.hour }}:{{ reserva.timeFim?.minute }} </td>
+                <td>
+                    <button type="button" class="btn btn-light m-1" routerLink="/reserva/{{reserva.id}}/editar">Editar</button>
+                    @if(reserva.ativo) {
+                    <button type="button" class="btn btn-danger m-1" (click)="ativarInativar(reserva?.id)">Cancelar</button>
+                    } @else {
+                    <button type="button" class="btn btn-info m-1" (click)="ativarInativar(reserva?.id)">Ativar</button>
+                    }
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+} @else {
+    <div class="card mt-3">
+        <div class="card-body">
+            Sem reservas para o momento.
+        </div>
+    </div>
+}

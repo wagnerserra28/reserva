@@ -1,0 +1,23 @@
+<div class="container mt-3">
+  <div class="row card">
+    <div class="mb-3">
+      <label for="nome" class="form-label">Nome</label>
+      <input type="email" class="form-control" id="nome" [(ngModel)]="nome" placeholder="Nome">
+    </div>
+    <div class="mb-3">
+      <button type="button" class="btn btn-success m-1" (click)="salvarCliente()">Salvar</button>
+      <button type="button" class="btn btn-secondary m-1" routerLink="/clientes">Voltar</button>
+    </div>
+    @if (salvoComSucesso) {
+    <div class="alert alert-success" role="alert">
+      Salvo com sucesso
+    </div>
+    }
+    @if (camposObrigatorios) {
+    <div class="alert alert-warning" role="alert">
+      Existem campos obrigatórios
+    </div>
+    }
+
+  </div>
+</div>

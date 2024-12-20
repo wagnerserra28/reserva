@@ -1,0 +1,42 @@
+<div class="card mt-3">
+  <div class="card-body">
+    Lista de clientes
+    <button type="button" class="btn btn-primary" routerLink="/cliente-criar">Criar</button>
+  </div>
+</div>
+
+@if(clientes && clientes.length > 0) {
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nome</th>
+      <th scope="col">Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (cliente of clientes; track cliente; let i = $index) {
+    <tr>
+      <th scope="row">{{ i + 1 }}</th>
+      <td>
+        {{ cliente.nome }}
+      </td>
+      <td>
+        <button type="button" class="btn btn-light m-1" routerLink="/cliente/{{cliente.id}}/editar">Editar</button>
+        @if(cliente.ativo) {
+        <button type="button" class="btn btn-danger m-1" (click)="ativarInativar(cliente.id)">Desativar</button>
+        } @else {
+        <button type="button" class="btn btn-info m-1" (click)="ativarInativar(cliente.id)">Ativar</button>
+        }
+      </td>
+    </tr>
+    }
+  </tbody>
+</table>
+} @else {
+<div class="card mt-3">
+  <div class="card-body">
+    Sem clientes para o momento.
+  </div>
+</div>
+}

@@ -1,0 +1,44 @@
+<div class="card mt-3">
+  <div class="card-body">
+    Lista de salas
+    <button type="button" class="btn btn-primary" routerLink="/sala-criar">Criar</button>
+  </div>
+</div>
+
+@if(salas && salas.length > 0) {
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Descrição</th>
+      <th scope="col">Quantidade Cadeiras</th>
+      <th scope="col">Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (sala of salas; track sala; let i = $index) {
+    <tr>
+      <th scope="row">{{ i + 1 }}</th>
+      <td>
+        {{ sala.descricao }}
+      </td>
+      <td>{{ sala.quantidadeCadeiras | number }}</td>
+      <td>
+        <button type="button" class="btn btn-light m-1" routerLink="/sala/{{sala.id}}/editar">Editar</button>
+        @if(sala.ativo) {
+        <button type="button" class="btn btn-danger m-1" (click)="ativarInativar(sala.id)">Desativar</button>
+        } @else {
+        <button type="button" class="btn btn-info m-1" (click)="ativarInativar(sala.id)">Ativar</button>
+        }
+      </td>
+    </tr>
+    }
+  </tbody>
+</table>
+} @else {
+<div class="card mt-3">
+  <div class="card-body">
+    Sem reservas para o momento.
+  </div>
+</div>
+}
